@@ -130,3 +130,15 @@ void TcpCtrl::receiveData(boost::array<char, 4> &receivedArray) {
                                 RebotBackendException::EX_SOCKET_READ_FAILED);
   }
 }
+
+void TcpCtrl::sendData(const std::vector<uint32_t> &data) {
+  try {
+    boost::asio::write(*_socket, boost::asio::buffer(data));
+  }
+  catch (...) {
+    // TODO: find out how to extract info from the boost excception and wrap it
+    // inside RebotBackendException
+    throw RebotBackendException("Error writing to socket",
+                                RebotBackendException::EX_SOCKET_WRITE_FAILED);
+  }
+}

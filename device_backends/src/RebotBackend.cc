@@ -44,7 +44,9 @@ namespace mtca4u {
     }
 
     unsigned int totalWordsToFetch = sizeInBytes / 4;
+    fetchFromRebotServer(address, totalWordsToFetch, data);
 
+/*
     int iterationsRequired = totalWordsToFetch / READ_BLOCK_SIZE;
     int leftOverWords = totalWordsToFetch % READ_BLOCK_SIZE;
 
@@ -57,6 +59,7 @@ namespace mtca4u {
     fetchFromRebotServer(address + (iterationsRequired * READ_BLOCK_SIZE),
         leftOverWords,
         data + (iterationsRequired * READ_BLOCK_SIZE));
+*/
   }
 
 
@@ -79,10 +82,21 @@ namespace mtca4u {
       address = address / 4;
     }
 
-    int mode = 1;
-    unsigned int packetsize = sizeInBytes / 4;
-    const unsigned int datasendSize = 3 * sizeof(int);
+    int mode = 2;
+    unsigned int wordsToWrite = sizeInBytes / 4;
+    std::vector<uint32_t> writeCommandPacket;
+    writeCommandPacket.push_back(mode);
+    writeCommandPacket.push_back(address);
+    writeCommandPacket.push_back(wordsToWrite);
+    for (unsigned int i = 0; i < wordsToWrite; ++i) {
+      writeCommandPacket.push_back(data[i]);
+    }
     boost::array<char, 4> receivedData;
+    _tcpObject->sendData(writeCommandPacket);
+    _tcpObject->receiveData(receivedData);
+
+/*    const unsigned int datasendSize = 3 * sizeof(int);
+    //boost::array<char, 4> receivedData;
     for (unsigned int i = 0; i < packetsize; ++i) {
       std::vector<char> datasend(datasendSize);
       datasend[0] = mode;
@@ -96,9 +110,9 @@ namespace mtca4u {
         datasend[j] = (data[i] >> (8 * (j - 8))) & 0xFF;
       }
 
-      _tcpObject->sendData(datasend);
+      _tcpObject->sendData(writeCommandPacket);
       _tcpObject->receiveData(receivedData);
-    }
+    }*/
   }
 
   void RebotBackend::close() {
