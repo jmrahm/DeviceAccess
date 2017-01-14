@@ -2,7 +2,7 @@
 #include "parserUtilities.h"
 
 using namespace boost::unit_test_framework;
-namespace utils = mtca4u::parserUtilities;
+namespace utilities = mtca4u::parserUtilities;
 
 // The test cases require the current working directory. This is provided
 // to the test suite through the shell script:
@@ -60,46 +60,46 @@ ParserUtilsTestClass::ParserUtilsTestClass(const std::string& currentWorkingDire
 /* Test cases... */
 void ParserUtilsTestClass::testGetCurrentWorkingDir() {
   std::string expectedReturnValue = _currentWorkingDir + "/";
-  BOOST_CHECK(utils::getCurrentWorkingDirectory() == expectedReturnValue);
+  BOOST_CHECK(utilities::getCurrentWorkingDirectory() == expectedReturnValue);
 }
 
 void ParserUtilsTestClass::testConvertToAbsPath() {
-  BOOST_CHECK(utils::convertToAbsolutePath("./test") == _currentWorkingDir + "/" + "./test");
-  BOOST_CHECK(utils::convertToAbsolutePath("./test/") == _currentWorkingDir + "/" + "./test/");
-  BOOST_CHECK(utils::convertToAbsolutePath("/test") == "/test");
-  BOOST_CHECK(utils::convertToAbsolutePath("/test/") == "/test/");
-  BOOST_CHECK(utils::convertToAbsolutePath("/") == "/");
-  BOOST_CHECK(utils::convertToAbsolutePath("test") == _currentWorkingDir + "/" + "test");
-  BOOST_CHECK(utils::convertToAbsolutePath("test/") == _currentWorkingDir + "/" + "test/");
-  BOOST_CHECK(utils::convertToAbsolutePath("") == _currentWorkingDir + "/");
+  BOOST_CHECK(utilities::convertToAbsolutePath("./test") == _currentWorkingDir + "/" + "./test");
+  BOOST_CHECK(utilities::convertToAbsolutePath("./test/") == _currentWorkingDir + "/" + "./test/");
+  BOOST_CHECK(utilities::convertToAbsolutePath("/test") == "/test");
+  BOOST_CHECK(utilities::convertToAbsolutePath("/test/") == "/test/");
+  BOOST_CHECK(utilities::convertToAbsolutePath("/") == "/");
+  BOOST_CHECK(utilities::convertToAbsolutePath("test") == _currentWorkingDir + "/" + "test");
+  BOOST_CHECK(utilities::convertToAbsolutePath("test/") == _currentWorkingDir + "/" + "test/");
+  BOOST_CHECK(utilities::convertToAbsolutePath("") == _currentWorkingDir + "/");
 }
 
 void ParserUtilsTestClass::testExtractDirectory(){
-  BOOST_CHECK(utils::extractDirectory("./test") ==  "./");
-  BOOST_CHECK(utils::extractDirectory("./test/") == "./test/");
-  BOOST_CHECK(utils::extractDirectory("/test") == "/");
-  BOOST_CHECK(utils::extractDirectory("/") == "/");
-  BOOST_CHECK(utils::extractDirectory("/test/") == "/test/");
-  BOOST_CHECK(utils::extractDirectory("test") == "./");
-  BOOST_CHECK(utils::extractDirectory("test/") == "test/");
-  BOOST_CHECK(utils::extractDirectory("") == "./");
+  BOOST_CHECK(utilities::extractDirectory("./test") ==  "./");
+  BOOST_CHECK(utilities::extractDirectory("./test/") == "./test/");
+  BOOST_CHECK(utilities::extractDirectory("/test") == "/");
+  BOOST_CHECK(utilities::extractDirectory("/") == "/");
+  BOOST_CHECK(utilities::extractDirectory("/test/") == "/test/");
+  BOOST_CHECK(utilities::extractDirectory("test") == "./");
+  BOOST_CHECK(utilities::extractDirectory("test/") == "test/");
+  BOOST_CHECK(utilities::extractDirectory("") == "./");
 }
 
 void ParserUtilsTestClass::testExtractFileName() {
-  BOOST_CHECK(utils::extractFileName("./test") == "test");
-  BOOST_CHECK(utils::extractFileName("./test/") == "");
-  BOOST_CHECK(utils::extractFileName("/test") == "test");
-  BOOST_CHECK(utils::extractFileName("/test/") == "");
-  BOOST_CHECK(utils::extractFileName("") == "");
+  BOOST_CHECK(utilities::extractFileName("./test") == "test");
+  BOOST_CHECK(utilities::extractFileName("./test/") == "");
+  BOOST_CHECK(utilities::extractFileName("/test") == "test");
+  BOOST_CHECK(utilities::extractFileName("/test/") == "");
+  BOOST_CHECK(utilities::extractFileName("") == "");
 }
 
 void ParserUtilsTestClass::testConcatenatePaths() {
-  BOOST_CHECK(utils::concatenatePaths("./a", "b") == "./a/b");
-  BOOST_CHECK(utils::concatenatePaths("./a/", "b") == "./a/b");
-  BOOST_CHECK(utils::concatenatePaths("./a/", "/b") == "/b");
-  BOOST_CHECK(utils::concatenatePaths("a", "b") == "a/b");
-  BOOST_CHECK(utils::concatenatePaths("a/", "b") == "a/b");
-  BOOST_CHECK(utils::concatenatePaths("a/", "/b") == "/b");
-  BOOST_CHECK(utils::concatenatePaths("a/", "") == "a/");
-  BOOST_CHECK(utils::concatenatePaths("", "") == "/");
+  BOOST_CHECK(utilities::concatenatePaths("./a", "b") == "./a/b");
+  BOOST_CHECK(utilities::concatenatePaths("./a/", "b") == "./a/b");
+  BOOST_CHECK(utilities::concatenatePaths("./a/", "/b") == "/b");
+  BOOST_CHECK(utilities::concatenatePaths("a", "b") == "a/b");
+  BOOST_CHECK(utilities::concatenatePaths("a/", "b") == "a/b");
+  BOOST_CHECK(utilities::concatenatePaths("a/", "/b") == "/b");
+  BOOST_CHECK(utilities::concatenatePaths("a/", "") == "a/");
+  BOOST_CHECK(utilities::concatenatePaths("", "") == "/");
 }
